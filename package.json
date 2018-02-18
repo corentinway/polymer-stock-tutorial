@@ -1,0 +1,14 @@
+{
+  "name": "polymer-stock-tutorial",
+  "version": "1.0.0",
+  "description": "Etude de cas d'une application de gestion de stock\r avec Polymer 1.x.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Corentin  Jechoux <corentin.jechoux.pro@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "static-server": "^3.0.0"
+  }
+}

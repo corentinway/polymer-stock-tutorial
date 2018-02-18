@@ -1,0 +1,20 @@
+{
+  "name": "polymer-stock-tutorial",
+  "authors": [
+    "Corentin Jechoux <corentin.jechoux.pro@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#1.x"
+  }
+}
