@@ -47,3 +47,10 @@ server.start(function () {
 ## index.html
 
 Faire un simple "Hello World".
+
+# Premier composant
+
+* Modifier `index.html`
+* Ajouter le composant `src/stock-app.html`
+
+**Vérifier** dans Chrome et IE.
