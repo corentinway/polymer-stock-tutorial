@@ -54,3 +54,9 @@ Faire un simple "Hello World".
 * Ajouter le composant `src/stock-app.html`
 
 **Vérifier** dans Chrome et IE.
+
+# Compatibilité IE
+
+On ajoute un "polyfill" si le navigateur n'implémente pas les
+web component : `webcomponentsjs/webcomponents-lite.min.js`.
+Et ça marche sous IE.

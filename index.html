@@ -8,6 +8,18 @@
     <link rel="import" href="src/stock-app.html">
   </head>
   <body>
+    <script>
+    (function () {
+      let hasRegisterElement = 'registerElement' in document;
+      let hasImport = 'import' in document.createElement( 'link' );
+      let hasTemplateContent = 'content' in document.createElement( 'tempalte' );
+      if ( !(hasRegisterElement && hasImport && hasTemplateContent ) ) {
+        var script = document.createElement( 'script' );
+        script.src = 'bower_components/webcomponentsjs/webcomponents-lite.min.js';
+        document.body.appendChild( script );
+      }
+    } )();
+    </script>
 
     <stock-app></stock-app>
 
