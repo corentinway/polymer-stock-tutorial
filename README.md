@@ -60,3 +60,12 @@ Faire un simple "Hello World".
 On ajoute un "polyfill" si le navigateur n'implémente pas les
 web component : `webcomponentsjs/webcomponents-lite.min.js`.
 Et ça marche sous IE.
+
+
+# innerHTML
+
+On peut **placer** et **réutiliser** du contenu mis dans un "web component".
+Pour cela :
+
+1. mettre du code HTML entre les balises du "web component". Il sera invisible
+2. utiliser la balise `<content>` sans et avec selecteur CSS pour l'afficher
