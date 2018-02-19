@@ -69,3 +69,11 @@ Pour cela :
 
 1. mettre du code HTML entre les balises du "web component". Il sera invisible
 2. utiliser la balise `<content>` sans et avec selecteur CSS pour l'afficher
+
+# Mise en place d'une liste
+
+* utilisation de `<template is="dom-repeat"></template>` pour générer une boucle : **Ne fonctionne pas pour faiare des tableaux (HTML) avec IE**
+* utilisation des annotations
+  * binding dans les 2 sens parent vers enfant, enfant vers parent : `{{stocks}}`
+  * utilisation dans un seul sens parent vers enfant : `[[items]]`
+* définition d'une **propriété** du "web component" typé `Array` et avec une valeur initial `['lait', 'céréals', 'fraises']` (pour le moment).

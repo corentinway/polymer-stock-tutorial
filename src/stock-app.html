@@ -5,14 +5,26 @@
   <template>
     <h1><content select=".title"></content></h1>
     <h2><content select=".sub-title"></content></h2>
-    Voici mon stock
+
+    <ul>
+    <template is="dom-repeat" items="{{stocks}}">
+      <li>[[item]]</li>
+    </template>
+    </ul>
+
   </template>
 
   <!-- dynamique du "web component" -->
   <script>
   // définition du "web component"
   Polymer( {
-    is: 'stock-app'
+    is: 'stock-app',
+    properties: {
+      stocks: {
+        type: Array,
+        value: [ 'lait', 'céréals', 'fraises']
+      }
+    }
   } );
   </script>
 </dom-module>
