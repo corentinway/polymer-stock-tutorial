@@ -6,6 +6,11 @@
     <h1><content select=".title"></content></h1>
     <h2><content select=".sub-title"></content></h2>
 
+    <div>
+      <input id="itemLabel" type="text" />
+      <button on-tap="_add">Ajouter</button>
+    </div>
+
     <ul>
     <template is="dom-repeat" items="{{stocks}}">
       <li>[[item]]</li>
@@ -24,6 +29,20 @@
         type: Array,
         value: [ 'lait', 'céréals', 'fraises']
       }
+    },
+
+    /**
+     * private function to add an element to the list
+     */
+    _add: function ( event ) {
+      let value = this.$.itemLabel.value;
+      // liste non mise à jours
+      //this.stocks.push( value );
+
+      // utiliser le mot clé debugger; pour poser un point d'arrêt très
+      // utile dans IE
+
+      this.push( 'stocks', value );
     }
   } );
   </script>

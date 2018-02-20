@@ -77,3 +77,17 @@ Pour cela :
   * binding dans les 2 sens parent vers enfant, enfant vers parent : `{{stocks}}`
   * utilisation dans un seul sens parent vers enfant : `[[items]]`
 * définition d'une **propriété** du "web component" typé `Array` et avec une valeur initial `['lait', 'céréals', 'fraises']` (pour le moment).
+
+# Ajout dans la liste
+
+Mettre en place :
+* un champ `input type="text"` pour définir un libellé dans le tableau
+* un bouton pour ajouter le libellé dans le tableau
+* la méthode `_add` qui ajoute un élément à la liste
+
+
+Mettre en place les tests
+```
+bower install Polymer/web-component-tester --save
+npm install wct --save-dev
+```

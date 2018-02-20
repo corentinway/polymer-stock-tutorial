@@ -9,6 +9,7 @@
   "author": "Corentin  Jechoux <corentin.jechoux.pro@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "static-server": "^3.0.0"
+    "static-server": "^3.0.0",
+    "wct": "^2.1.3"
   }
 }
