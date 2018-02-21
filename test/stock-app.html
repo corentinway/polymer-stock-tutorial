@@ -22,25 +22,30 @@
       var sutInputField;
       var sutAddButton;
       setup( function () {
+        // should clean local localStorage
+        localStorage.removeItem( 'stocks' );
+
         sut = fixture( 'simple' );
-        sutInputField = sut.querySelector( 'input' );
+        productField = sut.querySelector( '#productName' );
+        quantityField = sut.querySelector( '#quantity' );
         sutAddButton = sut.querySelector( 'button' );
+
+
       } );
-      test( 'should have 3 item at the begining', function () {
-        // initial state : 3 elements
-        expect( sut.stocks.length ).to.be.equal( 3 );
-        expect( sut.stocks[0] ).to.be.equal( 'lait' );
-        expect( sut.stocks[1] ).to.be.equal( 'céréals' );
-        expect( sut.stocks[2] ).to.be.equal( 'fraises' );
+      test( 'should have 0 item at the begining', function () {
+        // initial state : 0 elements
+        expect( sut.stocks.length ).to.be.equal( 0 );
       } );
       test( 'should be able to add one more elements' , function () {
         // add one element
-        sutInputField.value = 'chocolat en poudre';
+        productField.value = 'chocolat en poudre';
+        quantityField.value = '10';
         sutAddButton.click();
 
         // should have 4 elements
-        expect( sut.stocks.length ).to.be.equal( 4 );
-        expect( sut.stocks[3] ).to.be.equal( 'chocolat en poudre' );
+        expect( sut.stocks.length ).to.be.equal( 1 );
+        expect( sut.stocks[0].productName ).to.be.equal( 'chocolat en poudre' );
+        expect( sut.stocks[0].quantity ).to.be.equal( '10' );
       } );
       teardown( function () {
       } );

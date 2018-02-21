@@ -91,3 +91,9 @@ Mettre en place les tests
 bower install Polymer/web-component-tester --save
 npm install wct --save-dev
 ```
+
+
+# Gestion des quantité
+
+* ajout d'un champ quantité pour entrer un produit avec sa quantité
+* chargement du stock depuis le local storage au démarage

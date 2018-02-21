@@ -3,17 +3,23 @@
 <dom-module id="stock-app">
   <!-- définition de l'affichage du "web component"-->
   <template>
+    <style>
+      [qty] {
+        padding-left: 20px;
+      }
+    </style>
     <h1><content select=".title"></content></h1>
     <h2><content select=".sub-title"></content></h2>
 
     <div>
-      <input id="itemLabel" type="text" />
+      <label for="productName">Produit</label> <input id="productName" type="text" />
+      <label for="quantity">Quantité</label> <input id="quantity" type="number" />
       <button on-tap="_add">Ajouter</button>
     </div>
 
     <ul>
-    <template is="dom-repeat" items="{{stocks}}">
-      <li>[[item]]</li>
+    <template is="dom-repeat" items="{{stocks}}" as="stock">
+      <li><span>[[stock.productName]]</span><span qty>[[stock.quantity]]</span></li>
     </template>
     </ul>
 
@@ -27,22 +33,33 @@
     properties: {
       stocks: {
         type: Array,
-        value: [ 'lait', 'céréals', 'fraises']
+        value: []
       }
+    },
+
+    ready: function () {
+      this.stocks = JSON.parse( localStorage.getItem( 'stocks') ) ||  [];
     },
 
     /**
      * private function to add an element to the list
      */
     _add: function ( event ) {
-      let value = this.$.itemLabel.value;
+      let productName = this.$.productName.value;
+      let quantity = this.$.quantity.value;
+      let item = {
+        productName: productName,
+        quantity: quantity
+      };
       // liste non mise à jours
       //this.stocks.push( value );
 
       // utiliser le mot clé debugger; pour poser un point d'arrêt très
       // utile dans IE
 
-      this.push( 'stocks', value );
+
+      this.push( 'stocks', item );
+      localStorage.setItem( 'stocks', JSON.stringify( this.stocks ) );
     }
   } );
   </script>
