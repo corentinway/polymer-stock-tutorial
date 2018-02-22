@@ -1,4 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
 
 <dom-module id="stock-app">
   <!-- définition de l'affichage du "web component"-->
@@ -7,18 +9,34 @@
       [qty] {
         padding-left: 20px;
       }
+      [warn] {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #fff1ae;
+        border: 1px solid #ffdf46;
+        border-radius: 5px;
+      }
     </style>
     <h1><content select=".title"></content></h1>
     <h2><content select=".sub-title"></content></h2>
 
     <div>
-      <label for="productName">Produit</label> <input id="productName" type="text" />
-      <label for="quantity">Quantité</label> <input id="quantity" type="number" />
-      <button on-tap="_add">Ajouter</button>
+      <paper-input label="Produit" value="{{productName}}" id="productName" required error-message="Nom requis"></paper-input>
+      <paper-input label="Quantité" value="{{quantity}}" id="quantity" required error-message="Quantité requis" type="number"></paper-input>
+      <paper-button on-tap="_add" hidden$="[[_productExists]]">Ajouter</paper-button>
+      <div warn hidden$="[[!_productExists]]">Le product existe dans la liste.
+        Nous devons le mettre à jours</div>
     </div>
 
     <ul>
-    <template is="dom-repeat" items="{{stocks}}" as="stock">
+      <!--
+      NO SPACE in filer value. This don't work
+      filter="{{_productFilter( productName )}}"
+      -->
+    <template is="dom-repeat" items="{{stocks}}" as="stock"
+      filter="{{_productFilter(productName)}}"
+      rendered-item-count="{{_renderedItemCount}}"
+    >
       <li><span>[[stock.productName]]</span><span qty>[[stock.quantity]]</span></li>
     </template>
     </ul>
@@ -34,7 +52,22 @@
       stocks: {
         type: Array,
         value: []
-      }
+      },
+      productName: {
+        type: String
+      },
+      quantity: {
+        type: Number
+      },
+      _productExists: {
+        type: Boolean,
+        computed: '_computeProductExists( productName, _renderedItemCount )',
+        value: false
+      },
+      /**
+       * number rendered by the product dom-repeat
+       */
+      _renderedItemCount: Number
     },
 
     ready: function () {
@@ -45,21 +78,41 @@
      * private function to add an element to the list
      */
     _add: function ( event ) {
-      let productName = this.$.productName.value;
-      let quantity = this.$.quantity.value;
-      let item = {
-        productName: productName,
-        quantity: quantity
-      };
-      // liste non mise à jours
-      //this.stocks.push( value );
+      if ( this.$.productName.validate() && this.$.quantity.validate() ) {
 
-      // utiliser le mot clé debugger; pour poser un point d'arrêt très
-      // utile dans IE
+        let item = {
+          productName: this.productName,
+          quantity: this.quantity
+        };
 
+        // persist
+        this.push( 'stocks', item );
+        localStorage.setItem( 'stocks', JSON.stringify( this.stocks ) );
 
-      this.push( 'stocks', item );
-      localStorage.setItem( 'stocks', JSON.stringify( this.stocks ) );
+        // clear the form hence the _productFilter will not hide any item
+        this.productName = null;
+        this.quantity = null;
+      }
+
+    },
+    /**
+     * search for a product within the stocks array
+     */
+    _productFilter: function ( productName ) {
+      if ( productName ) {
+        productName = productName.toLowerCase();
+        return function ( stock ) {
+          let match = stock.productName.toLowerCase().indexOf( productName ) !== -1;
+          return match;
+        };
+      } else {
+        return null;
+      }
+    },
+
+    _computeProductExists: function( productName, renderedItemCount ) {
+      let searchInProgress = productName && productName.trim().length > 0;
+      return searchInProgress && renderedItemCount > 0;
     }
   } );
   </script>

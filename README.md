@@ -97,3 +97,18 @@ npm install wct --save-dev
 
 * ajout d'un champ quantité pour entrer un produit avec sa quantité
 * chargement du stock depuis le local storage au démarage
+
+
+# Recherche automatique dans la liste
+
+Pour ne pas ajouter 2 fois le même produit, on va chercher dans la liste au fur et à mesure qu'on entre le nom du produit.
+
+Besoin de champ input avancé : au choix `<iron-input>` ou `<paper-input>`. On prend le second car il inclus du **material design**.
+
+On a besoin :
+```
+bower install PolymerElements/paper-input --save
+bower install PolymerElements/paper-button --save
+```
+
+On ajoute `filter` et `rendered-item-count` sur le `dom-repeat` pour effectuer des recherches dans la liste.
