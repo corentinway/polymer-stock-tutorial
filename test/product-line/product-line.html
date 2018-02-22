@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <title>product line test</title>
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../bower_components/polymer/polymer.html">
+    <!-- sut -->
+    <link rel="import" href="../../src/product-line/product-line.html">
+  </head>
+  <body>
+    <test-fixture id="simple">
+      <template>
+        <product-line></product-line>
+      </template>
+    </test-fixture>
+    <script>
+    describe( '<product-line>', function () {
+      var sut;
+      var decreaseButton;
+      var increaseButton;
+      beforeEach( function () {
+        sut = fixture( 'simple' );
+        sut.product = {
+          productName : 'banane',
+          quantity: 7
+        };
+        let buttons = sut.querySelectorAll( 'paper-button' );
+        decreaseButton = buttons[0];
+        increaseButton = buttons[1];
+      } );
+      it( 'should increase the quantity', function () {
+        // call
+        increaseButton.click();
+        // assert
+        expect( sut.product.quantity ).to.be.equal( 8 );
+      } );
+      it( 'should decrease the quantity', function () {
+        // call
+        decreaseButton.click();
+        // assert
+        expect( sut.product.quantity ).to.be.equal( 6 );
+      } );
+
+    } );
+    </script>
+  </body>
+</html>

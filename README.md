@@ -117,3 +117,12 @@ On ajoute `filter` et `rendered-item-count` sur le `dom-repeat` pour effectuer d
 
 * Ajout de 2 boutons pour diminuer ou augmenter la quantité d'un produit.
 * Ajout de 2 fonctions pour modififer la quantité du produit.
+
+
+# Refactoring - d'une ligne de produit
+
+* création du web component `<product-line>`
+* 2 fonctions pour mettre à jours la quantité du produit
+* création d'un évènement pour notifier le changement du produit pour forcer la sauvegarde dans le local storage
+* mise en place du style et style configurable
+* mise en place du test du composant

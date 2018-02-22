@@ -1,0 +1,54 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="product-line">
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding-left: 20px;
+        border-left: 4px solid var(--product-line-border-color, #777);
+        margin-bottom: 10px;
+        font-family: sans-serif;
+      }
+      [qty] {
+        padding-left: 20px;
+      }
+      [product-name] {
+        @apply(--product-line-product-name);
+      }
+    </style>
+    <span product-name>[[product.productName]]</span>
+    <span qty>[[product.quantity]]</span>
+    <span>
+      <paper-button on-tap="_decreaseQuantity">-</paper-button>
+      <paper-button on-tap="_increaseQuantity">+</paper-button>
+    </span>
+  </template>
+  <script>
+  Polymer( {
+    is: 'product-line',
+    properties: {
+      product: {
+        type: Object
+      }
+    },
+    /**
+     * decrease quantity of the targeted item
+     */
+    _decreaseQuantity: function ( event ) {
+      this.set( 'product.quantity', this.product.quantity - 1 );
+      // sent an event that the product was updated
+      this.fire( 'update' );
+    },
+    /**
+     * decrease quantity of the targeted item
+     */
+    _increaseQuantity: function ( event ) {
+      this.set( 'product.quantity', this.product.quantity + 1 );
+      // sent an event that the product was updated
+      this.fire( 'update' );
+    }
+  } );
+  </script>
+</dom-module>
