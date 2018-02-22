@@ -33,11 +33,18 @@
       NO SPACE in filer value. This don't work
       filter="{{_productFilter( productName )}}"
       -->
-    <template is="dom-repeat" items="{{stocks}}" as="stock"
+    <template is="dom-repeat" items="{{stocks}}" as="product"
       filter="{{_productFilter(productName)}}"
       rendered-item-count="{{_renderedItemCount}}"
     >
-      <li><span>[[stock.productName]]</span><span qty>[[stock.quantity]]</span></li>
+      <li>
+          <span>[[product.productName]]</span>
+          <span qty>[[product.quantity]]</span>
+          <span>
+            <paper-button on-tap="_decreaseQuantity">-</paper-button>
+            <paper-button on-tap="_increaseQuantity">+</paper-button>
+          </span>
+      </li>
     </template>
     </ul>
 
@@ -82,12 +89,12 @@
 
         let item = {
           productName: this.productName,
-          quantity: this.quantity
+          quantity: +this.quantity
         };
 
         // persist
         this.push( 'stocks', item );
-        localStorage.setItem( 'stocks', JSON.stringify( this.stocks ) );
+        this._persist();
 
         // clear the form hence the _productFilter will not hide any item
         this.productName = null;
@@ -95,6 +102,11 @@
       }
 
     },
+
+    _persist: function () {
+      localStorage.setItem( 'stocks', JSON.stringify( this.stocks ) );
+    },
+
     /**
      * search for a product within the stocks array
      */
@@ -113,6 +125,25 @@
     _computeProductExists: function( productName, renderedItemCount ) {
       let searchInProgress = productName && productName.trim().length > 0;
       return searchInProgress && renderedItemCount > 0;
+    },
+
+    /**
+     * decrease quantity of the targeted item
+     */
+    _decreaseQuantity: function ( event ) {
+      let product = event.model.product;
+      let index = this.stocks.indexOf( product );
+      this.set( 'stocks.' + index + '.quantity', product.quantity - 1 );
+      this._persist();
+    },
+    /**
+     * decrease quantity of the targeted item
+     */
+    _increaseQuantity: function ( event ) {
+      let product = event.model.product;
+      let index = this.stocks.indexOf( product );
+      this.set( 'stocks.' + index + '.quantity', product.quantity + 1 );
+      this._persist();
     }
   } );
   </script>

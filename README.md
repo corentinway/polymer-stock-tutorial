@@ -112,3 +112,8 @@ bower install PolymerElements/paper-button --save
 ```
 
 On ajoute `filter` et `rendered-item-count` sur le `dom-repeat` pour effectuer des recherches dans la liste.
+
+# Ajout des boutons pour modifier la quantité
+
+* Ajout de 2 boutons pour diminuer ou augmenter la quantité d'un produit.
+* Ajout de 2 fonctions pour modififer la quantité du produit.
