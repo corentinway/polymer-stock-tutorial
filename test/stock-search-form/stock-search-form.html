@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+  <head>
+    <title>stock search form test</title>
+    <script src="../../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../bower_components/web-component-tester/browser.js"></script>
+
+    <link rel="import" href="../../bower_components/polymer/polymer.html">
+    <!-- sut -->
+    <link rel="import" href="../../src/stock-search-form/stock-search-form.html">
+  </head>
+  <body>
+    <test-fixture id="simple">
+      <template>
+        <stock-search-form></stock-search-form>
+      </template>
+    </test-fixture>
+    <script>
+    describe( '<stock-search-form>', function () {
+      var sut;
+      var productField ;
+      var quantityField;
+      var addButton;
+      beforeEach( function () {
+        sut = fixture( 'simple' );
+        productField = sut.querySelector( '#productName' );
+        quantityField = sut.querySelector( '#quantity' );
+        addButton = sut.querySelector( 'paper-button' );
+      } );
+      it( 'should have a product name defined', function ( done ) {
+        // Mutation observer is async, so wait one tick.
+        Polymer.Base.async( function () {
+          productField.validate();
+          Polymer.Base.async( function () {
+            assert.isTrue( productField.invalid );
+            done();
+          }, 1 );
+        }, 1 );
+
+      } );
+      it( 'should have a quantity defined', function ( done ) {
+        // Mutation observer is async, so wait one tick.
+        Polymer.Base.async( function () {
+          quantityField.validate();
+          Polymer.Base.async( function () {
+            assert.isTrue( quantityField.invalid );
+            done();
+          }, 1 );
+        }, 1 );
+
+      } );
+
+      it( 'should have both a product name and a quantity to add a value', function ( done ) {
+        let addHandler = function ( event ) {
+          done( 'Error : should not be invoked' );
+        };
+        sut.addEventListener( 'add', addHandler );
+        Polymer.Base.async( function() {
+          addButton.click( );
+          Polymer.Base.async( function () {
+            // no error
+            done();
+          }, 1);
+        }, 1 );
+      } );
+
+      it( 'should invoke add handler given both a product name and a quantity', function ( done ) {
+        // inputs
+        productField.value = 'iphone';
+        quantityField.value = 1;
+
+        let addHandler = function ( event ) {
+          // success
+          done( );
+        };
+        sut.addEventListener( 'add', addHandler );
+        Polymer.Base.async( function() {
+          addButton.click( );
+        }, 1 );
+      } );
+
+    } );
+    </script>
+  </body>
+</html>

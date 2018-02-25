@@ -2,6 +2,7 @@
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 <link rel="import" href="./product-line/product-line.html">
+<link rel="import" href="./stock-search-form/stock-search-form.html">
 
 <dom-module id="stock-app">
   <!-- définition de l'affichage du "web component"-->
@@ -11,7 +12,6 @@
         --product-line-product-name: {
           font-weight: bold;
         };
-        /* example */
         /* --product-line-border-color: red; */
       }
       [warn] {
@@ -25,13 +25,12 @@
     <h1><content select=".title"></content></h1>
     <h2><content select=".sub-title"></content></h2>
 
-    <div>
-      <paper-input label="Produit" value="{{productName}}" id="productName" required error-message="Nom requis"></paper-input>
-      <paper-input label="Quantité" value="{{quantity}}" id="quantity" required error-message="Quantité requis" type="number"></paper-input>
-      <paper-button on-tap="_add" hidden$="[[_productExists]]">Ajouter</paper-button>
-      <div warn hidden$="[[!_productExists]]">Le product existe dans la liste.
-        Nous devons le mettre à jours</div>
-    </div>
+    <stock-search-form
+      product-name="{{productName}}"
+      quantity="{{quantity}}"
+      product-exists="[[_productExists]]"
+      on-add="_add"
+    ></stock-search-form>
 
       <!--
       NO SPACE in filer value. This don't work
@@ -80,22 +79,10 @@
     /**
      * private function to add an element to the list
      */
-    _add: function ( event ) {
-      if ( this.$.productName.validate() && this.$.quantity.validate() ) {
-
-        let item = {
-          productName: this.productName,
-          quantity: +this.quantity
-        };
-
+    _add: function ( event, detail ) {
         // persist
-        this.push( 'stocks', item );
+        this.push( 'stocks', detail );
         this._persist();
-
-        // clear the form hence the _productFilter will not hide any item
-        this.productName = null;
-        this.quantity = null;
-      }
 
     },
 
@@ -120,7 +107,10 @@
 
     _computeProductExists: function( productName, renderedItemCount ) {
       let searchInProgress = productName && productName.trim().length > 0;
-      return searchInProgress && renderedItemCount > 0;
+      if ( searchInProgress && renderedItemCount === 1 ) {
+          return this.querySelector( 'product-line' ).product.productName === productName;
+      }
+      return false;
     },
 
     _productUpdated: function ( event ) {

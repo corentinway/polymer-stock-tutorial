@@ -1,0 +1,59 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+<dom-module id="stock-search-form">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      [warn] {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #fff1ae;
+        border: 1px solid #ffdf46;
+        border-radius: 5px;
+      }
+    </style>
+
+    <paper-input label="Produit" value="{{productName}}" id="productName" required error-message="Nom requis"></paper-input>
+    <paper-input label="Quantité" value="{{quantity}}" id="quantity" required error-message="Quantité requis" type="number"></paper-input>
+    <paper-button on-tap="_add" hidden$="[[productExists]]">Ajouter</paper-button>
+    <div warn hidden$="[[!productExists]]">Le product existe dans la liste.
+      Nous devons le mettre à jours</div>
+
+
+  </template>
+  <script>
+  Polymer( {
+    is: 'stock-search-form',
+    properties: {
+      productName: {
+        type: String,
+        notify: true
+      },
+      quantity: Number,
+      productExists: {
+        type: Boolean,
+        value: true
+      }
+    },
+    _add: function ( event ) {
+      if ( this.$.productName.validate() && this.$.quantity.validate() ) {
+
+        let detail = {
+          productName: this.productName,
+          quantity: this.quantity
+        };
+
+        this.fire( 'add', detail );
+
+        // clear the form hence the _productFilter will not hide any item
+        this.productName = null;
+        this.quantity = null;
+      }
+    }
+  } );
+  </script>
+</dom-module>

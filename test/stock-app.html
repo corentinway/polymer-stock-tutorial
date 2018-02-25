@@ -19,7 +19,8 @@
     <script>
     suite( '<stock-app>', function () {
       var sut;
-      var sutInputField;
+      var productField ;
+      var quantityField;
       var sutAddButton;
       setup( function () {
         // should clean local localStorage
@@ -39,23 +40,13 @@
       test( 'should be able to add one more elements' , function () {
         // add one element
         productField.value = 'chocolat en poudre';
-        quantityField.value = '10';
+        quantityField.value = 10;
         sutAddButton.click();
 
         // should have 4 elements
         expect( sut.stocks.length ).to.be.equal( 1 );
         expect( sut.stocks[0].productName ).to.be.equal( 'chocolat en poudre' );
         expect( sut.stocks[0].quantity ).to.be.equal( 10 );
-      } );
-
-      test( 'should increase the quantity of an product', function () {
-        // add one element
-        productField.value = 'chocolat en poudre';
-        quantityField.value = '10';
-        sutAddButton.click();
-
-        // find the increse button
-        // find to test it. ==> need refactorisation
       } );
 
       teardown( function () {

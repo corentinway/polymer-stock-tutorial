@@ -126,3 +126,9 @@ On ajoute `filter` et `rendered-item-count` sur le `dom-repeat` pour effectuer d
 * création d'un évènement pour notifier le changement du produit pour forcer la sauvegarde dans le local storage
 * mise en place du style et style configurable
 * mise en place du test du composant
+
+# Refactoring - formulaire de recherche
+
+* ajout du `<stock-search-form>` et de son test unitaire
+* déplacer la logique de recherche dans la composant :
+  * validation des champs du formulaire
